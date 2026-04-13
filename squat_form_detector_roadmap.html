@@ -1,0 +1,138 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:0;cursor:pointer}
+.step:last-child .line{display:none}
+.left{display:flex;flex-direction:column;align-items:center;width:44px;flex-shrink:0}
+.dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:2px;transition:transform .15s}
+.step:hover .dot{transform:scale(1.1)}
+.line{width:2px;flex:1;min-height:24px;margin:4px 0}
+.right{padding:0 0 28px 14px;flex:1}
+.step-tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:5px}
+.step-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.step-dur{font-size:11px;color:var(--color-text-secondary);margin-bottom:6px}
+.step-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:8px}
+.pills{display:flex;flex-wrap:wrap;gap:4px}
+.pill{font-size:10px;padding:2px 8px;border-radius:8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.deliverable{margin-top:7px;padding:7px 10px;border-radius:var(--border-radius-md);font-size:11px;line-height:1.5}
+
+.s1-dot{background:#EEEDFE;color:#3C3489}
+.s1-line{background:#CECBF6}
+.s1-tag{background:#EEEDFE;color:#3C3489}
+.s1-del{background:#EEEDFE;color:#3C3489}
+
+.s2-dot{background:#E1F5EE;color:#0F6E56}
+.s2-line{background:#9FE1CB}
+.s2-tag{background:#E1F5EE;color:#0F6E56}
+.s2-del{background:#E1F5EE;color:#0F6E56}
+
+.s3-dot{background:#FAEEDA;color:#854F0B}
+.s3-line{background:#FAC775}
+.s3-tag{background:#FAEEDA;color:#854F0B}
+.s3-del{background:#FAEEDA;color:#854F0B}
+
+.s4-dot{background:#FAECE7;color:#993C1D}
+.s4-line{background:#F5C4B3}
+.s4-tag{background:#FAECE7;color:#993C1D}
+.s4-del{background:#FAECE7;color:#993C1D}
+
+.s5-dot{background:#E6F1FB;color:#185FA5}
+.s5-line{background:#B5D4F4}
+.s5-tag{background:#E6F1FB;color:#185FA5}
+.s5-del{background:#E6F1FB;color:#185FA5}
+
+.s6-dot{background:#EAF3DE;color:#3B6D11}
+.s6-line{background:#C0DD97}
+.s6-tag{background:#EAF3DE;color:#3B6D11}
+.s6-del{background:#EAF3DE;color:#3B6D11}
+
+@media(prefers-color-scheme:dark){
+.s1-dot{background:#26215C;color:#CECBF6}.s1-tag{background:#26215C;color:#CECBF6}.s1-del{background:#26215C;color:#CECBF6}.s1-line{background:#3C3489}
+.s2-dot{background:#04342C;color:#9FE1CB}.s2-tag{background:#04342C;color:#9FE1CB}.s2-del{background:#04342C;color:#9FE1CB}.s2-line{background:#0F6E56}
+.s3-dot{background:#412402;color:#FAC775}.s3-tag{background:#412402;color:#FAC775}.s3-del{background:#412402;color:#FAC775}.s3-line{background:#854F0B}
+.s4-dot{background:#4A1B0C;color:#F5C4B3}.s4-tag{background:#4A1B0C;color:#F5C4B3}.s4-del{background:#4A1B0C;color:#F5C4B3}.s4-line{background:#993C1D}
+.s5-dot{background:#042C53;color:#B5D4F4}.s5-tag{background:#042C53;color:#B5D4F4}.s5-del{background:#042C53;color:#B5D4F4}.s5-line{background:#185FA5}
+.s6-dot{background:#173404;color:#C0DD97}.s6-tag{background:#173404;color:#C0DD97}.s6-del{background:#173404;color:#C0DD97}.s6-line{background:#3B6D11}
+}
+</style>
+
+<div class="wrap">
+<div class="steps" id="steps"></div>
+</div>
+
+<script>
+const steps = [
+  {
+    n:"01", c:"s1", tag:"Foundation", dur:"3–4 weeks · 1–2 hrs/day",
+    title:"Python fundamentals",
+    desc:"Variables, lists, loops, functions, basic file handling. You don't need everything — just enough to write scripts that process video frames and numbers.",
+    pills:["Variables & types","Lists & loops","Functions","Reading files","pip & virtual envs"],
+    del:"You can write a Python script that reads a video file frame by frame and prints its dimensions.",
+    prompt:"Teach me the Python fundamentals I specifically need to start working with video and pose detection — skip what I don't need"
+  },
+  {
+    n:"02", c:"s2", tag:"Computer vision basics", dur:"2–3 weeks · 1–2 hrs/day",
+    title:"OpenCV — working with video & images",
+    desc:"OpenCV is the industry standard library for video processing. You'll learn to open a webcam or video file, read frames, draw on them, and display output. This is the eyes of your model.",
+    pills:["cv2.VideoCapture","Frame reading","Drawing on frames","BGR vs RGB","Resizing & cropping"],
+    del:"A Python script that opens your webcam, draws a green box on the screen in real-time, and shows FPS.",
+    prompt:"Teach me OpenCV basics for video processing — how to read frames from a webcam and draw on them in real-time"
+  },
+  {
+    n:"03", c:"s3", tag:"Pose estimation", dur:"2–3 weeks · 1–2 hrs/day",
+    title:"MediaPipe — body landmark detection",
+    desc:"MediaPipe (by Google) detects 33 body keypoints — shoulders, hips, knees, ankles — from a video frame in real-time. You don't train this model. You use it as a tool. This is the single most important step for your project.",
+    pills:["MediaPipe Pose","33 landmarks","x,y,z coordinates","Visibility scores","Real-time inference"],
+    del:"Script that opens webcam, detects your pose, and draws all 33 skeleton landmarks on your body in real-time.",
+    prompt:"Show me how to use MediaPipe Pose to detect body landmarks from a webcam feed in real-time — full working code"
+  },
+  {
+    n:"04", c:"s4", tag:"Angle math", dur:"2 weeks · 1–2 hrs/day",
+    title:"Joint angle calculation",
+    desc:"A squat is just a set of joint angles — knee angle, hip angle, back angle. Using NumPy, you calculate the angle between 3 landmarks (e.g. hip → knee → ankle) to measure knee bend. This is the actual intelligence of your detector.",
+    pills:["NumPy vectors","arctan2 formula","Knee angle","Hip angle","Back angle"],
+    del:"Function that takes 3 landmark points and returns the angle between them. Displays live knee angle on screen.",
+    prompt:"Teach me how to calculate joint angles from MediaPipe landmarks using NumPy — specifically knee and hip angles for squat analysis"
+  },
+  {
+    n:"05", c:"s5", tag:"Form logic", dur:"2–3 weeks · 1–2 hrs/day",
+    title:"Squat form rules + feedback engine",
+    desc:"Now you encode what good form looks like as angle thresholds and rules. Knee below 90°? Rep counted. Knee caving inward? Flag it. Back angle too far forward? Warn the user. This is rule-based AI — simple, interpretable, and highly effective for this problem.",
+    pills:["Angle thresholds","Rep counter","State machine","Real-time alerts","Form scoring"],
+    del:"Live squat analyzer: counts reps, detects knee cave and forward lean, shows form score on screen.",
+    prompt:"Help me build the form detection logic for squats — how to detect knee cave, depth, back angle, and count reps using angle thresholds"
+  },
+  {
+    n:"06", c:"s6", tag:"Your working model", dur:"2–3 weeks · 1–2 hrs/day",
+    title:"Polish + integrate into your Flutter app",
+    desc:"Package your Python model as a local API (FastAPI), then call it from your Flutter app. The phone camera feeds video to the API, which returns form feedback in real-time. This is your working demo — something you can actually show people.",
+    pills:["FastAPI wrapper","JSON feedback output","Flutter HTTP calls","On-device vs server","Demo recording"],
+    del:"Flutter app that shows live camera feed with skeleton overlay, rep count, and form feedback. Fully working demo.",
+    prompt:"How do I package my Python squat form detector as a FastAPI endpoint and call it from a Flutter app in real-time?"
+  },
+];
+
+const container = document.getElementById('steps');
+steps.forEach((s,i)=>{
+  const div = document.createElement('div');
+  div.className='step';
+  div.innerHTML=`
+    <div class="left">
+      <div class="dot ${s.c}-dot">${s.n}</div>
+      <div class="line ${s.c}-line"></div>
+    </div>
+    <div class="right">
+      <span class="step-tag ${s.c}-tag">${s.tag}</span>
+      <div class="step-title">${s.title}</div>
+      <div class="step-dur">${s.dur}</div>
+      <div class="step-desc">${s.desc}</div>
+      <div class="pills">${s.pills.map(p=>`<span class="pill">${p}</span>`).join('')}</div>
+      <div class="deliverable ${s.c}-del">Deliverable: ${s.del}</div>
+    </div>
+  `;
+  div.onclick=()=>sendPrompt(s.prompt);
+  container.appendChild(div);
+});
+</script>
