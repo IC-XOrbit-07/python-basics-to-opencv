@@ -2,7 +2,7 @@
 
 # CONSTANTS
 
-FILE_PATH  = "./File Handling/write_file.txt"                                       # File Location to read, write and append
+FILE_PATH        = "./File Handling/write_file.txt"                                 # File Location to read, write and append
 FILE_CONTENT     = "This is file content"                                           # File content to add
 DEFAULT_ENCODING = "UTF-8"                                                          # Default Encoding
 
